@@ -307,9 +307,11 @@ IQUE_EGCS_PATH := $(TOOLS_DIR)/ique_egcs
 IQUE_LD_PATH := $(TOOLS_DIR)/ique_ld
 
 # detect prefix for MIPS toolchain
-ifneq      ($(call find-command,mips-linux-gnu-ld),)
+ifneq      ($(call find-command,mips-n64-gcc),)
+  CROSS := mips-n64-
+else ifneq ($(call find-command,mips-linux-gnu-gcc),)
   CROSS := mips-linux-gnu-
-else ifneq ($(call find-command,mips64-linux-gnu-ld),)
+else ifneq ($(call find-command,mips64-linux-gnu-gcc),)
   CROSS := mips64-linux-gnu-
 else ifneq ($(call find-command,mips64-elf-ld),)
   CROSS := mips64-elf-
