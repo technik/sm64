@@ -44,7 +44,7 @@ ifeq      ($(VERSION),jp)
   VERSION_SH_CN  ?= false
 else ifeq ($(VERSION),us)
   DEFINES   += VERSION_US=1
-  OPT_FLAGS := -g
+  OPT_FLAGS := -O2
   GRUCODE   ?= f3d_old
   VERSION_JP_US  ?= true
   VERSION_SH_CN  ?= false
@@ -482,6 +482,9 @@ endif
 
 clean:
 	$(RM) -r $(BUILD_DIR_BASE)
+
+cleancode:
+	$(RM) $(ROM) $(ELF) $(O_FILES)
 
 distclean: clean
 	$(PYTHON) extract_assets.py --clean
@@ -932,7 +935,7 @@ $(BUILD_DIR)/$(TARGET).objdump: $(ELF)
 
 
 
-.PHONY: all clean distclean default diff test load libultra
+.PHONY: all clean cleancode distclean default diff test load libultra
 # with no prerequisites, .SECONDARY causes no intermediate target to be removed
 .SECONDARY:
 

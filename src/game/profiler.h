@@ -47,5 +47,6 @@ void profiler_log_thread4_time(void);
 void profiler_log_gfx_time(enum ProfilerGfxEvent eventID);
 void profiler_log_vblank_time(void);
 void draw_profiler(void);
+u32 cyclesToUs(u64 cycles);
 
 #endif // PROFILER_H

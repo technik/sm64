@@ -3,10 +3,12 @@
 #include <PR/gbi.h>
 
 #include "sm64.h"
+#include "print.h"
 #include "profiler.h"
 #include "game_init.h"
+#include "PR/os.h"
 
-s16 gProfilerMode = 0;
+s16 gProfilerMode = 1;
 
 // the thread 3 info is logged on the opposite profiler from what is used by
 // the thread4 and 5 loggers. It's likely because the sound thread runs at a
@@ -122,6 +124,12 @@ void draw_reference_profiler_bars(void) {
     gDPFillRectangle(gDisplayListHead++, 177, 220, 226, 222);
 }
 
+u32 cyclesToUs(u64 cycles)
+{
+    u64 us = cycles * 1000000LL / osClockRate;
+    return (u32)us;
+}
+
 /*
   Draw Profiler Mode 1. This mode draws a traditional per-event bar for durations of tasks
   recorded by the profiler calls of various threads.
@@ -140,6 +148,11 @@ void draw_profiler_mode_1(void) {
     s32 i;
     struct ProfilerFrameData *profiler;
     OSTime clockBase;
+    u64 clockStart;
+    u64 levelScriptDuration;
+    u64 renderDuration;
+    u64 rspDuration;
+    u64 rdpDuration;
 
     // the profiler logs 2 frames of data: last frame and current frame. Indexes are used
     // to keep track of the current frame, so the index is xor'd to retrieve the last frame's
@@ -161,6 +174,20 @@ void draw_profiler_mode_1(void) {
     // draw the profiler for the time it takes for the display lists to send. (blue)
     draw_profiler_bar(clockBase, profiler->gameTimes[2], profiler->gameTimes[3], 212,
                       GPACK_RGBA5551(40, 192, 230, 1));
+
+    // set variables for duration of tasks.
+    // was thread 5 ran before thread 4? set the lower one to be the clockStart.
+    clockStart = profiler->gameTimes[0] <= profiler->soundTimes[0] ? profiler->gameTimes[0]
+                                                                    : profiler->soundTimes[0];
+    levelScriptDuration = profiler->gameTimes[1] - clockStart;
+    renderDuration = profiler->gameTimes[2] - profiler->gameTimes[1];
+    rspDuration = profiler->gfxTimes[1] - profiler->gfxTimes[0];
+    rdpDuration = profiler->gfxTimes[2] - profiler->gfxTimes[0];
+    
+    print_text_fmt_int(180, 104, "LVL %d", cyclesToUs(levelScriptDuration));
+    print_text_fmt_int(180, 88, "REN %d", cyclesToUs(renderDuration));
+    print_text_fmt_int(180, 72, "RSP %d", cyclesToUs(rspDuration));
+    print_text_fmt_int(180, 56, "RDP %d", cyclesToUs(rdpDuration));
 
     // we need to get the amount of finished numSoundTimes pairs, so get rid of the odd bit to get the
     // limit of finished pairs.
@@ -235,6 +262,10 @@ void draw_profiler_mode_0(void) {
     rspDuration = profiler->gfxTimes[1] - profiler->gfxTimes[0];
     rdpDuration = profiler->gfxTimes[2] - profiler->gfxTimes[0];
     vblank = 0;
+    
+    print_text_fmt_int(180, 88, "REN %d", cyclesToUs(renderDuration));
+    print_text_fmt_int(180, 72, "RSP %d", cyclesToUs(rspDuration));
+    print_text_fmt_int(180, 56, "RDP %d", cyclesToUs(rdpDuration));
 
     // like above functions, toss the odd bit.
     profiler->numSoundTimes &= 0xFFFE;
@@ -296,9 +327,9 @@ void draw_profiler_mode_0(void) {
 // Draw the Profiler per frame. Toggle the mode if the player presses L while this
 // renderer is active.
 void draw_profiler(void) {
-    if (gPlayer1Controller->buttonPressed & L_TRIG) {
-        gProfilerMode ^= 1;
-    }
+    //if (gPlayer1Controller->buttonPressed & L_TRIG) {
+    //    gProfilerMode ^= 1;
+    //}
 
     if (gProfilerMode == 0) {
         draw_profiler_mode_0();
