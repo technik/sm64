@@ -105,9 +105,6 @@ void unknown_main_func(void) {
 #pragma GCC diagnostic pop
 }
 
-void stub_main_1(void) {
-}
-
 void stub_main_2(void) {
 }
 
@@ -455,8 +452,10 @@ void thread1_idle(UNUSED void *arg) {
 void main_func(void) {
     UNUSED u8 filler[64];
 
+    // Init n64 OS
     osInitialize();
-    stub_main_1();
-    create_thread(&gIdleThread, 1, thread1_idle, NULL, gIdleThreadStack + 0x800, 100);
+
+    // Create and run the idle thread, which will take over the boot stack
+    create_thread(&gIdleThread, 1, thread1_idle, NULL, gIdleThreadStack + IDLE_STACKSIZE, 100);
     osStartThread(&gIdleThread);
 }
