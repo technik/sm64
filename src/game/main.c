@@ -452,7 +452,7 @@ void thread1_idle(UNUSED void *arg) {
 void main_func(void) {
     UNUSED u8 filler[64];
 
-    // Init n64 OS
+    // Init n64 OS and create system threads.
     osInitialize();
 
     // Create and run the idle thread, which will take over the boot stack
