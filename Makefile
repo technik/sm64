@@ -70,6 +70,7 @@ endif
 
 TARGET := sm64.$(VERSION)
 
+FPS_60 ?= 1
 
 # GRUCODE - selects which RSP microcode to use.
 #   f3d_old - default for JP and US versions
@@ -92,6 +93,9 @@ else ifeq ($(GRUCODE),f3dzex) # Fast3DZEX (2.0J / Animal Forest - Dōbutsu no Mo
   DEFINES += F3DZEX_GBI_2=1 F3DEX_GBI_2=1 F3DEX_GBI_SHARED=1
 endif
 
+ifeq ($(FPS_60),1)
+  DEFINES += FPS_LOCK_60=1
+endif
 
 # USE_QEMU_IRIX - when ido is selected, select which way to emulate IRIX programs
 #   1 - use qemu-irix
