@@ -410,9 +410,7 @@ void display_and_vsync(void) {
     }
     exec_display_list(&gGfxPool->spTask);
     profiler_log_thread5_time(AFTER_DISPLAY_LISTS);
-#ifndef !PS_LOCK_60
-    osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
-#endif
+    //osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
     osViSwapBuffer((void *) PHYSICAL_TO_VIRTUAL(gPhysicalFramebuffers[sRenderedFramebuffer]));
     profiler_log_thread5_time(THREAD5_END);
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
