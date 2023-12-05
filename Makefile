@@ -23,7 +23,8 @@ TARGET_N64 ?= 1
 #   ido - uses the SGI IRIS Development Option compiler, which is used to build
 #         an original matching N64 ROM
 #   gcc - uses the GNU C Compiler
-COMPILER ?= gcc #ido
+COMPILER ?= gcc
+#COMPILER ?= ido
 $(eval $(call validate-option,COMPILER,ido gcc))
 
 
@@ -119,7 +120,7 @@ endif
 # NON_MATCHING - whether to build a matching, identical copy of the ROM
 #   1 - enable some alternate, more portable code that does not produce a matching ROM
 #   0 - build a matching ROM
-NON_MATCHING ?= 1 # 0
+NON_MATCHING ?= 0
 $(eval $(call validate-option,NON_MATCHING,0 1))
 
 ifeq ($(TARGET_N64),0)
@@ -135,7 +136,7 @@ endif
 # COMPARE - whether to verify the SHA-1 hash of the ROM after building
 #   1 - verifies the SHA-1 hash of the selected version of the game
 #   0 - does not verify the hash
-COMPARE ?= 0 # 1
+COMPARE ?= 1
 $(eval $(call validate-option,COMPARE,0 1))
 
 TARGET_STRING := sm64.$(VERSION).$(GRUCODE)
