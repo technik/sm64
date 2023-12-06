@@ -25,75 +25,66 @@ int gSplineState;
 #endif
 
 /// Copy vector 'src' to 'dest'
-void *vec3f_copy(Vec3f dest, Vec3f src) {
+void vec3f_copy(Vec3f dest, Vec3f src) {
     dest[0] = src[0];
     dest[1] = src[1];
     dest[2] = src[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Set vector 'dest' to (x, y, z)
-void *vec3f_set(Vec3f dest, f32 x, f32 y, f32 z) {
+void vec3f_set(Vec3f dest, f32 x, f32 y, f32 z) {
     dest[0] = x;
     dest[1] = y;
     dest[2] = z;
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Add vector 'a' to 'dest'
-void *vec3f_add(Vec3f dest, Vec3f a) {
+void vec3f_add(Vec3f dest, Vec3f a) {
     dest[0] += a[0];
     dest[1] += a[1];
     dest[2] += a[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Make 'dest' the sum of vectors a and b.
-void *vec3f_sum(Vec3f dest, Vec3f a, Vec3f b) {
+void vec3f_sum(Vec3f dest, Vec3f a, Vec3f b) {
     dest[0] = a[0] + b[0];
     dest[1] = a[1] + b[1];
     dest[2] = a[2] + b[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Copy vector src to dest
-void *vec3s_copy(Vec3s dest, Vec3s src) {
+void vec3s_copy(Vec3s dest, Vec3s src) {
     dest[0] = src[0];
     dest[1] = src[1];
     dest[2] = src[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Set vector 'dest' to (x, y, z)
-void *vec3s_set(Vec3s dest, s16 x, s16 y, s16 z) {
+void vec3s_set(Vec3s dest, s16 x, s16 y, s16 z) {
     dest[0] = x;
     dest[1] = y;
     dest[2] = z;
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Add vector a to 'dest'
-void *vec3s_add(Vec3s dest, Vec3s a) {
+void vec3s_add(Vec3s dest, Vec3s a) {
     dest[0] += a[0];
     dest[1] += a[1];
     dest[2] += a[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Make 'dest' the sum of vectors a and b.
-void *vec3s_sum(Vec3s dest, Vec3s a, Vec3s b) {
+void vec3s_sum(Vec3s dest, Vec3s a, Vec3s b) {
     dest[0] = a[0] + b[0];
     dest[1] = a[1] + b[1];
     dest[2] = a[2] + b[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Subtract vector a from 'dest'
-void *vec3s_sub(Vec3s dest, Vec3s a) {
+void vec3s_sub(Vec3s dest, Vec3s a) {
     dest[0] -= a[0];
     dest[1] -= a[1];
     dest[2] -= a[2];
-    return &dest; //! warning: function returns address of local variable
 }
 
 /// Convert short vector a to float vector 'dest'
