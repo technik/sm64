@@ -110,10 +110,10 @@ static void render_fps(void) {
         calculate_frameTime_from_OSTime(newTime - gLastOSTime);
 
         // If frame time is longer or equal to a second, update FPS counter.
-        if (gFrameTime >= 1.0f) {
-            gFPS = gFrames;
+        if (gFrameTime >= 0.5f) {
+            gFPS = 2*gFrames;
             gFrames = 0;
-            gFrameTime -= 1.0f;
+            gFrameTime -= 0.5f;
         }
 
         print_text_fmt_int(FPS_COUNTER_X_POS, FPS_COUNTER_Y_POS, "FPS %d", gFPS);
