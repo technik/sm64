@@ -111,9 +111,21 @@ void vec3f_to_vec3s(Vec3s dest, Vec3f a) {
  * at the same time.
  */
 void find_vector_perpendicular_to_plane(Vec3f dest, Vec3f a, Vec3f b, Vec3f c) {
+    /*
     dest[0] = (b[1] - a[1]) * (c[2] - b[2]) - (c[1] - b[1]) * (b[2] - a[2]);
     dest[1] = (b[2] - a[2]) * (c[0] - b[0]) - (c[2] - b[2]) * (b[0] - a[0]);
     dest[2] = (b[0] - a[0]) * (c[1] - b[1]) - (c[0] - b[0]) * (b[1] - a[1]);
+    */
+    Vec3f ab, bc;
+    ab[0] = b[0]-a[0];
+    ab[1] = b[1]-a[1];
+    ab[2] = b[2]-a[2];
+    bc[0] = c[0]-b[0];
+    bc[1] = c[1]-b[1];
+    bc[2] = c[2]-b[2];
+    dest[0] = ab[1] * bc[2] - bc[1] * ab[2];
+    dest[1] = ab[2] * bc[0] - bc[2] * ab[0];
+    dest[2] = ab[0] * bc[1] - bc[0] * ab[1];
 }
 
 /// Make vector 'dest' the cross product of vectors a and b.
