@@ -1559,7 +1559,11 @@ void sink_mario_in_quicksand(struct MarioState *m) {
  * Equals [1000]^5 . [100]^8 . [10]^9 . [1] in binary, which is
  * 100010001000100010001001001001001001001001001010101010101010101.
  */
-u64 sCapFlickerFrames = 0x4444449249255555;
+u32 sCapFlickerFrames[2] =
+{ 
+    0x49255555,
+    0x44444492
+};
 
 /**
  * Updates the cap flags mainly based on the cap timer.
@@ -1592,7 +1596,11 @@ u32 update_and_return_cap_flags(struct MarioState *m) {
 
         // This code flickers the cap through a long binary string, increasing in how
         // common it flickers near the end.
-        if ((m->capTimer < 64) && ((1ULL << m->capTimer) & sCapFlickerFrames)) {
+        //if ((m->capTimer < 64) && ((1ULL << m->capTimer) & sCapFlickerFrames)) {
+        //int highFlick = m->capTimer >= 32 ? 1 : 0;
+        int highFlick = (m->capTimer >> 5);
+        if ((m->capTimer < 64) && ((1 << (m->capTimer&31)) & sCapFlickerFrames[highFlick]))
+        {
             flags &= ~MARIO_SPECIAL_CAPS;
             if (!(flags & MARIO_CAPS)) {
                 flags &= ~MARIO_CAP_ON_HEAD;

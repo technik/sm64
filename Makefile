@@ -45,7 +45,7 @@ ifeq      ($(VERSION),jp)
   VERSION_SH_CN  ?= false
 else ifeq ($(VERSION),us)
   DEFINES   += VERSION_US=1
-  OPT_FLAGS := -O2
+  OPT_FLAGS := -Os
   GRUCODE   ?= f3dex2
   VERSION_JP_US  ?= true
   VERSION_SH_CN  ?= false
@@ -113,7 +113,7 @@ ifeq      ($(COMPILER),ido)
 else ifeq ($(COMPILER),gcc)
   NON_MATCHING := 1
   MIPSISET     := -mips3
-  OPT_FLAGS    := -O2
+  OPT_FLAGS    := -Os
 endif
 
 
